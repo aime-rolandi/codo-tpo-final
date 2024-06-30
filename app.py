@@ -1,26 +1,14 @@
-#--------------------------------------------------------------------
-# Instalar con pip install Flask
 from flask import Flask, request, jsonify
-
-# Instalar con pip install flask-cors
 from flask_cors import CORS
-
-# Instalar con pip install mysql-connector-python
 import mysql.connector
-
-# Si es necesario, pip install Werkzeug
 from werkzeug.utils import secure_filename
-
-# No es necesario instalar, es parte del sistema standard de Python
 import os
 import time
-#--------------------------------------------------------------------
 
 app = Flask(__name__)
-CORS(app)  # Esto habilitará CORS para todas las rutas
+CORS(app) 
 
 class Catalogo:
-    #----------------------------------------------------------------
     # Metodos en la clase
     def __init__(self, host, user, password, database):
         self.conn = mysql.connector.connect(
@@ -29,11 +17,9 @@ class Catalogo:
             password=password
         )
         self.cursor = self.conn.cursor()
-        # Intentamos seleccionar la base de datos si no existe se crea una
         try:
             self.cursor.execute(f"USE {database}")
         except mysql.connector.Error as err:
-            # Si la base de datos no existe, la creamos
             if err.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
                 self.cursor.execute(f"CREATE DATABASE {database}")
                 self.conn.database = database
@@ -49,7 +35,6 @@ class Catalogo:
             proveedor INT(4))''')
         self.conn.commit()
         
-        # Cerrar el cursor inicial y abrir uno nuevo con el parámetro dictionary=True
         self.cursor.close()
         self.cursor = self.conn.cursor(dictionary=True)
 
@@ -59,13 +44,11 @@ class Catalogo:
         return productos
     
     def consultar_producto(self, codigo):
-        # Consultamos un producto a partir de su código
         self.cursor.execute(f"SELECT * FROM productos WHERE codigo = {codigo}")
         return self.cursor.fetchone()
 
     # Mostrar producto (read)
     def mostrar_producto(self, codigo):
-        # Mostramos los datos de un producto a partir de su código
         producto = self.consultar_producto(codigo)
         if producto:
             print("-" * 40)
@@ -98,14 +81,10 @@ class Catalogo:
 
     # Eliminar un producto (delete)
     def eliminar_producto(self, codigo):
-        # Eliminamos un producto de la tabla a partir de su código
         self.cursor.execute(f"DELETE FROM productos WHERE codigo = {codigo}")
         self.conn.commit()
         return self.cursor.rowcount > 0
 
-#--------------------------------------------------------------------
-# Cuerpo del programa
-#--------------------------------------------------------------------
 # Crear una instancia de la clase Catalogo
 catalogo = Catalogo(host='aime22.mysql.pythonanywhere-services.com', user='aime22', password='backpy123', database='aime22$miapp')
 
@@ -127,7 +106,6 @@ def mostrar_producto(codigo):
 
 @app.route("/productos", methods=["POST"])
 def agregar_producto():
-    #Recojo los datos del form
     descripcion = request.form['descripcion']
     cantidad = request.form['cantidad']
     precio = request.form['precio']
@@ -155,25 +133,19 @@ def modificar_producto(codigo):
     nuevo_precio = request.form.get("precio")
     nuevo_proveedor = request.form.get("proveedor")
     
-    # Verifica si se proporcionó una nueva imagen (nuevo nombre)
     if 'imagen' in request.files:
         imagen = request.files['imagen']
-        # Procesamiento de la imagen
         nombre_imagen = secure_filename(imagen.filename) 
         nombre_base, extension = os.path.splitext(nombre_imagen) 
         nombre_imagen = f"{nombre_base}_{int(time.time())}{extension}" 
 
-        # Guardar la imagen en el servidor
         imagen.save(os.path.join(ruta_destino, nombre_imagen))
         
-        # Busco el producto guardado
         producto = catalogo.consultar_producto(codigo)
-        if producto: # Si existe el producto...
+        if producto: 
             imagen_vieja = producto["imagen"]
-            # Armo la ruta a la imagen
             ruta_imagen = os.path.join(ruta_destino, imagen_vieja)
 
-            # Y si existe la borro.
             if os.path.exists(ruta_imagen):
                 os.remove(ruta_imagen)
     else:     
@@ -181,7 +153,6 @@ def modificar_producto(codigo):
         if producto:
             nombre_imagen = producto["imagen"]
 
-   # Se llama al método modificar_producto pasando el codigo del producto y los nuevos datos.
     if catalogo.modificar_producto(codigo, nueva_descripcion, nueva_cantidad, nuevo_precio, nombre_imagen, nuevo_proveedor):
         return jsonify({"mensaje": "Producto modificado"}), 200
     else:
@@ -192,12 +163,10 @@ def eliminar_producto(codigo):
     # Primero, obtiene la información del producto para encontrar la imagen
     producto = catalogo.consultar_producto(codigo)
     if producto:
-        # Eliminar la imagen asociada si existe
         ruta_imagen = os.path.join(ruta_destino, producto['imagen'])
         if os.path.exists(ruta_imagen):
             os.remove(ruta_imagen)
 
-        # Luego, elimina el producto del catálogo
         if catalogo.eliminar_producto(codigo):
             return jsonify({"mensaje": "Producto eliminado"}), 200
         else:
