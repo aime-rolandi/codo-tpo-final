@@ -1,6 +1,6 @@
-const URL = "https://aime22.pythonanywhere.com/"
+const URL = "https://aime22.pythonanywhere.com/";
 
-// Variables de estado para controlar la visibilidad y los datos del formulario
+// Variables de estado
 let codigo = '';
 let descripcion = '';
 let cantidad = '';
@@ -18,12 +18,12 @@ document.getElementById('nuevaImagen').addEventListener('change', seleccionarIma
 function obtenerProducto(event) {
     event.preventDefault();
     codigo = document.getElementById('codigo').value;
-    fetch(URL + 'productos/' + codigo)
+    fetch(`${URL}productos/${codigo}`)
         .then(response => {
             if (response.ok) {
-                return response.json()
+                return response.json();
             } else {
-                throw new Error('Error al obtener los datos del producto.')
+                throw new Error('Producto no encontrado.');
             }
         })
         .then(data => {
@@ -32,29 +32,28 @@ function obtenerProducto(event) {
             precio = data.precio;
             proveedor = data.proveedor;
             imagen = data.imagen;
-            mostrarDatosProducto = true; 
+            mostrarDatosProducto = true;
             mostrarFormulario();
         })
         .catch(error => {
+            console.error('Error:', error);
             alert('Código no encontrado.');
         });
 }
 
-// Muestra el formulario con los datos del producto
 function mostrarFormulario() {
     if (mostrarDatosProducto) {
         document.getElementById('descripcionModificar').value = descripcion;
         document.getElementById('cantidadModificar').value = cantidad;
         document.getElementById('precioModificar').value = precio;
-        document.getElementById('proveModificar').value = proveedor;
+        document.getElementById('proveedorProducto').value = proveedor; 
 
         const imagenActual = document.getElementById('imagen-actual');
-        if (imagen && !imagenSeleccionada) { 
-            
-            imagenActual.src = 'https://www.pythonanywhere.com/user/aime22/files/home/aime22/mysite/static/images/' + imagen;                    
-            imagenActual.style.display = 'block'; 
+        if (imagen && !imagenSeleccionada) {
+            imagenActual.src = `https://aime22.pythonanywhere.com/static/images/${imagen}`;
+            imagenActual.style.display = 'block';
         } else {
-            imagenActual.style.display = 'none'; 
+            imagenActual.style.display = 'none';
         }
 
         document.getElementById('datos-producto').style.display = 'block';
@@ -63,18 +62,16 @@ function mostrarFormulario() {
     }
 }
 
-// Se activa cuando el usuario selecciona una imagen para cargar.
 function seleccionarImagen(event) {
     const file = event.target.files[0];
     imagenSeleccionada = file;
-    imagenUrlTemp = URL.createObjectURL(file); 
+    imagenUrlTemp = URL.createObjectURL(file);
 
     const imagenVistaPrevia = document.getElementById('imagen-vista-previa');
     imagenVistaPrevia.src = imagenUrlTemp;
     imagenVistaPrevia.style.display = 'block';
 }
 
-// Se usa para enviar los datos modificados del producto al servidor.
 function guardarCambios(event) {
     event.preventDefault();
 
@@ -82,22 +79,22 @@ function guardarCambios(event) {
     formData.append('codigo', codigo);
     formData.append('descripcion', document.getElementById('descripcionModificar').value);
     formData.append('cantidad', document.getElementById('cantidadModificar').value);
-    formData.append('proveedor', document.getElementById('proveModificar').value);
+    formData.append('proveedor', document.getElementById('proveedorProducto').value); 
     formData.append('precio', document.getElementById('precioModificar').value);
 
     if (imagenSeleccionada) {
         formData.append('imagen', imagenSeleccionada, imagenSeleccionada.name);
     }
 
-    fetch(URL + 'productos/' + codigo, {
+    fetch(`${URL}productos/${codigo}`, {
         method: 'PUT',
         body: formData,
     })
         .then(response => {
             if (response.ok) {
-                return response.json()
+                return response.json();
             } else {
-                throw new Error('Error al guardar los cambios del producto.')
+                throw new Error('Error al guardar los cambios del producto.');
             }
         })
         .then(data => {
@@ -115,7 +112,7 @@ function limpiarFormulario() {
     document.getElementById('descripcionModificar').value = '';
     document.getElementById('cantidadModificar').value = '';
     document.getElementById('precioModificar').value = '';
-    document.getElementById('proveModificar').value = '';
+    document.getElementById('proveedorProducto').value = ''; 
     document.getElementById('nuevaImagen').value = '';
 
     const imagenActual = document.getElementById('imagen-actual');
