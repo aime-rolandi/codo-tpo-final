@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Listado de Productos</title>
+        <link rel="stylesheet" href="../static/css/estilos.css">
+        <link rel="shortcut icon" href="../static/images/img_estilos/logo.png" type="image/x-icon">
+    </head>
+
+    <body>
+        <!--<header>
+            <nav class="navbar-index ">
+                <img class="logo-nav" src="../static/images/logos-nav.webp" alt="logo agencia de aprendizaje">
+            </nav>
+        </header>-->
+
+        <div class="logo-centrado">
+            <img src="../static/images/img_estilos/logo.png" alt="logo" height="250">
+        </div>
+        <h1>Listado de Productos de Stock</h1><br>
+        <div class="table-container">
+            <table class="table"> 
+                
+                <thead> 
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>                
+                        <th align="right">Precio</th>
+                        <th>Imagen</th>
+                        <th align="right">Proveedor</th>
+                        
+                    </tr>
+                </thead>
+                <tbody id="tablaProductos"> </tbody>
+            </table><br>
+        </div>
+
+        <div class="contenedor-centrado">
+                        <a href="../index.html">Menu principal</a>
+
+        </div><br>
+        <script src="../static/js/listado.js"></script>
+    </body>
+</html>

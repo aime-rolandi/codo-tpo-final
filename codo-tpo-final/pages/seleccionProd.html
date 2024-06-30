@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Producto</title>
+    <link rel="stylesheet" href="../static/css/estilos.css">
+    <link rel="shortcut icon" href="../static/images/img_estilos/logo.png" type="image/x-icon">
+</head>
+<body>
+    <div class="logo-centrado">
+        <img src="../static/images/img_estilos/logo.png" alt="logo" height="250">
+    </div>
+    <h1>Visualizar Productos de Stock</h1><br>
+
+    <form id="app">
+        <select id="productoSelect" width="100%">
+            <option value="">Seleccione un producto</option>
+        </select><br><br>
+        <a href="../index.html">Menú principal</a>
+    </form>
+
+    <div class="contenedor-tarjeta">
+        <div class="tarjeta" id="tarjetaProducto" style="display: none;">
+            <h2>Detalles del Producto</h2>
+            <div id="detallesProducto" class="detalle-producto"></div>
+        </div>
+    </div>
+
+    <script src="../static/js/seleccionar.js"></script>
+</body>
+</html>
