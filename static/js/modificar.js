@@ -15,7 +15,6 @@ document.getElementById('form-obtener-producto').addEventListener('submit', obte
 document.getElementById('form-guardar-cambios').addEventListener('submit', guardarCambios);
 document.getElementById('nuevaImagen').addEventListener('change', seleccionarImagen);
 
-// Se ejecuta cuando se envía el formulario de consulta. Realiza una solicitud GET a la API y obtiene los datos del producto correspondiente al código ingresado.
 function obtenerProducto(event) {
     event.preventDefault();
     codigo = document.getElementById('codigo').value;
@@ -33,7 +32,7 @@ function obtenerProducto(event) {
             precio = data.precio;
             proveedor = data.proveedor;
             imagen = data.imagen;
-            mostrarDatosProducto = true; //Activa la vista del segundo formulario
+            mostrarDatosProducto = true; 
             mostrarFormulario();
         })
         .catch(error => {
@@ -86,7 +85,6 @@ function guardarCambios(event) {
     formData.append('proveedor', document.getElementById('proveModificar').value);
     formData.append('precio', document.getElementById('precioModificar').value);
 
-    // Si se ha seleccionado una imagen nueva, la añade al formData. 
     if (imagenSeleccionada) {
         formData.append('imagen', imagenSeleccionada, imagenSeleccionada.name);
     }
@@ -112,7 +110,6 @@ function guardarCambios(event) {
         });
 }
 
-// Restablece todas las variables relacionadas con el formulario a sus valores iniciales, lo que efectivamente "limpia" el formulario.
 function limpiarFormulario() {
     document.getElementById('codigo').value = '';
     document.getElementById('descripcionModificar').value = '';

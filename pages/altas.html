@@ -1,44 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Agregar producto</title>
-        <link rel="stylesheet" href="../static/css/estilos.css">
-        <link rel="shortcut icon" href="../static/images/img_estilos/logo.png" type="image/x-icon">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar producto</title>
+    <link rel="stylesheet" href="../static/css/estilos.css">
+    <link rel="shortcut icon" href="../static/images/img_estilos/logo.png" type="image/x-icon">
+</head>
 
-    <body>
-        <div class="logo-centrado">
-            <img src="../static/images/img_estilos/logo.png" alt="logo" height="250">
-        </div>
-        <h1>Agregar Productos a Stock</h1><br>
+<body>
+    <div class="logo-centrado">
+        <img src="../static/images/img_estilos/logo.png" alt="logo" height="250">
+    </div>
+    <h1>Agregar Productos a Stock</h1><br>
 
-        <form id="formulario" enctype="multipart/form-data">
-            
-            <label for="descripcion">Descripción:</label>
-            <input type="text" id="descripcion" name="descripcion" required><br>
+    <form id="formulario" enctype="multipart/form-data">
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" required><br>
 
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" id="cantidad" name="cantidad" required><br>
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" id="cantidad" name="cantidad" required><br>
 
-            <label for="precio">Precio:</label>
-            <input type="number" step="0.01" id="precio" name="precio" required><br>
+        <label for="precio">Precio:</label>
+        <input type="number" step="0.01" id="precio" name="precio" required><br>
 
-            <label for="imagenProducto">Imagen del producto:</label>
-            <input type="file" id="imagenProducto" name="imagen">
+        <label for="imagenProducto">Imagen del producto:</label>
+        <input type="file" id="imagenProducto" name="imagen"><br><br>
 
-            <br><br>
-            <label for="proveedorProducto">Proveedor:</label>
-            <input type="text" id="proveedorProducto" name="proveedor">
-            
-            <button type="submit">Agregar Producto</button>
-            <a href="../index.html">Menu principal</a>
-        </form>
+        <label for="proveedorProducto">Proveedor:</label>
+        <select id="proveedorProducto" name="proveedor" required>
+            <option value="">Seleccione un proveedor</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select><br><br>
 
-        <script src="../static/js/altas.js"></script>
-    </body>
+        <button type="submit">Agregar Producto</button>
+        <a href="../index.html">Menú principal</a>
+    </form>
+
+    <script src="../static/js/altas.js"></script>
+</body>
 
 </html>

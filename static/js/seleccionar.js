@@ -12,7 +12,6 @@ fetch(URL + 'productos')
     .then(function (data) {
         let productoSelect = document.getElementById('productoSelect');
 
-        // Iteramos sobre cada producto y agregamos opciones al select
         for (let producto of data) {
             let option = document.createElement('option');
             option.value = producto.codigo;
@@ -37,7 +36,6 @@ document.getElementById('productoSelect').addEventListener('change', function ()
                 }
             })
             .then(function (producto) {
-                // Mostramos los detalles del producto en la tarjeta
                 let tarjetaProducto = document.getElementById('tarjetaProducto');
                 let detallesProducto = document.getElementById('detallesProducto');
                 detallesProducto.innerHTML = `
