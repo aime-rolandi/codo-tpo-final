@@ -1,6 +1,5 @@
 const URL = "https://aime22.pythonanywhere.com/"
 
-// Realizamos la solicitud GET al servidor para obtener todos los productos.
 fetch(URL + 'productos')
     .then(function (response) {
         if (response.ok) {
@@ -10,7 +9,6 @@ fetch(URL + 'productos')
         }
     })
 
-    //Esta función maneja los datos convertidos del JSON.
     .then(function (data) {
         let tablaProductos = document.getElementById('tablaProductos'); 
 

@@ -3,9 +3,42 @@ const URL = "https://aime22.pythonanywhere.com/";
 document.getElementById('formulario').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    var formData = new FormData(this);
+    var descripcion = document.getElementById('descripcion').value.trim();
+    var cantidad = document.getElementById('cantidad').value.trim();
+    var precio = document.getElementById('precio').value.trim();
+    var proveedor = document.getElementById('proveedorProducto').value.trim();
+    var imagenProducto = document.getElementById('imagenProducto').files[0];
 
-    // Realizamos la solicitud POST al servidor
+    var errores = [];
+
+    if (!descripcion) {
+        errores.push('Descripción');
+    }
+    if (!cantidad) {
+        errores.push('Cantidad');
+    }
+    if (!precio) {
+        errores.push('Precio');
+    }
+    if (!proveedor) {
+        errores.push('Proveedor');
+    }
+    if (!imagenProducto) {
+        errores.push('Imagen del producto');
+    }
+
+    if (errores.length > 0) {
+        alert('Complete los siguientes campos: ' + errores.join(', '));
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append('descripcion', descripcion);
+    formData.append('cantidad', cantidad);
+    formData.append('precio', precio);
+    formData.append('proveedor', proveedor);
+    formData.append('imagen', imagenProducto);
+
     fetch(URL + 'productos', {
         method: 'POST',
         body: formData 
@@ -23,7 +56,6 @@ document.getElementById('formulario').addEventListener('submit', function (event
     .catch(function (error) {
         alert('Error al agregar el producto.');
     })
-    // Limpiar el formulario en ambos casos (éxito o error)
     .finally(function () {
         document.getElementById('descripcion').value = "";
         document.getElementById('cantidad').value = "";

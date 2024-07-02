@@ -1,6 +1,5 @@
 const URL = "https://aime22.pythonanywhere.com/";
 
-// Variables de estado
 let codigo = '';
 let descripcion = '';
 let cantidad = '';

@@ -1,16 +1,13 @@
 const URL = "https://aime22.pythonanywhere.com/"
 
-
-// Obtiene el contenido del inventario
 function obtenerProductos() {
-    fetch(URL + 'productos') // Realiza una solicitud GET al servidor y obtener la lista de productos.
+    fetch(URL + 'productos') 
         .then(response => {
             if (response.ok) { return response.json(); }
         })
-        // Asigna los datos de los productos obtenidos a la propiedad productos del estado.
         .then(data => {
             const productosTable = document.getElementById('productos-table').getElementsByTagName('tbody')[0];
-            productosTable.innerHTML = ''; // Limpia la tabla antes de insertar nuevos datos
+            productosTable.innerHTML = ''; 
             data.forEach(producto => {
                 const row = productosTable.insertRow();
                 row.innerHTML = `
@@ -28,7 +25,6 @@ function obtenerProductos() {
         });
 }
 
-// Se utiliza para eliminar un producto.
 function eliminarProducto(codigo) {
     if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
         fetch(URL + `productos/${codigo}`, { method: 'DELETE' })

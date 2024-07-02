@@ -1,6 +1,5 @@
 const URL = "https://aime22.pythonanywhere.com/";
 
-// Realizamos la solicitud GET al servidor para obtener todos los productos.
 fetch(URL + 'productos')
     .then(function (response) {
         if (response.ok) {
@@ -26,7 +25,6 @@ fetch(URL + 'productos')
 document.getElementById('productoSelect').addEventListener('change', function () {
     let codigo = this.value;
     if (codigo) {
-        // Realizamos la solicitud GET para obtener los detalles del producto seleccionado
         fetch(URL + 'productos/' + codigo)
             .then(function (response) {
                 if (response.ok) {
