@@ -63,12 +63,16 @@ function mostrarFormulario() {
 
 function seleccionarImagen(event) {
     const file = event.target.files[0];
-    imagenSeleccionada = file;
-    imagenUrlTemp = URL.createObjectURL(file);
 
-    const imagenVistaPrevia = document.getElementById('imagen-vista-previa');
-    imagenVistaPrevia.src = imagenUrlTemp;
-    imagenVistaPrevia.style.display = 'block';
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const imagenVistaPrevia = document.getElementById('imagen-vista-previa');
+        imagenVistaPrevia.src = event.target.result; 
+        imagenVistaPrevia.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+
+    imagenSeleccionada = file;
 }
 
 function guardarCambios(event) {
